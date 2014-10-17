@@ -64,9 +64,9 @@
 		// There are several events for cross browser compatibility.
 		script.onreadystatechange = callback;
 		script.onload = callback;
-		script.onerror = funtion () {
+		script.onerror = function () {
 			throw new Error('cannot import ' + url + ', no translation available');
-		}
+		};
 
 		// Fire the loading
 		document.head.appendChild(script);
@@ -93,7 +93,7 @@
 		window.localizer = this;
 		window.localize = function (key, data) {
 			that.localize(key, data);
-		}
+		};
 	};
 
 	/**
