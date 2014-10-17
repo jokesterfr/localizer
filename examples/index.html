@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Examples using localizer</title>
+		<script src="../localizer.js"></script>
+	</head>
+	<body>
+		<ul>
+			<li data-localize>Mojo</li>
+			<li data-name="Princess Peach" data-localize>Hello {name}!</li>
+		</ul>
+		<button data-localize>Switch to french</button>
+		<script>
+			// Instanciate singleton and localize body
+			var l = new Localizer();
+			localize(document.body);
+
+			// Add a locale switcher
+			var button = document.querySelector('button');
+			button.addEventListener('click', function () {
+				if (localizer.getLocale() === 'en_US') {
+					localizer.setLocale('fr_FR');
+				} else {
+					localizer.setLocale('en_US');
+				}
+			});
+		</script>
+	</body>
+</html>

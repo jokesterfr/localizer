@@ -1,0 +1,24 @@
+{
+  "name": "localizer",
+  "main": "localizer.js",
+  "version": "0.1.0",
+  "authors": [
+    "jokesterfr <main@jokester.fr>"
+  ],
+  "description": "The client-side javascript for Grunt-locales",
+  "keywords": [
+    "grunt-locales",
+    "translation",
+    "messageformat",
+    "localizer",
+    "localize"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
