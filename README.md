@@ -12,7 +12,7 @@ Installation
 
 	bower install localizer
 
-then add a <script> tag in your page:
+then add a script tag in your page:
 
 ```javascript
 <script src="../../bower_components/localizer/localizer.js"></script>
