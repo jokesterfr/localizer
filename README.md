@@ -14,7 +14,7 @@ Installation
 
 then add a script tag in your page:
 
-```javascript
+```html
 <script src="../../bower_components/localizer/localizer.js"></script>
 ```
 
