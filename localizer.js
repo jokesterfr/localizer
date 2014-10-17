@@ -53,6 +53,8 @@
 			var old = document.getElementById(id);
 			if (old) old.parentNode.removeChild(old);
 		}
+		// Reset previous i18n set (if any)
+		window.i18n = {};
 
 		// Adding the script tag to the head as suggested before
 		var script = document.createElement('script');
@@ -187,7 +189,9 @@
 				func = window.i18n && window.i18n[attr || node.innerHTML],
 				key;
 			if (func) {
-				if (!attr) node.setAttribute('data-localize', node.textContent);
+				if (!attr) {
+					node.setAttribute('data-localize', node.textContent);
+				}
 				for (key in dataset) {
 					// Data is guessed on the fly with the dataset
 					if (dataset.hasOwnProperty(key) && key !== 'localize') {
@@ -197,6 +201,8 @@
 				node.innerHTML = func(data);
 			} else if (attr) {
 				node.textContent = attr;
+			} else {
+				node.setAttribute('data-localize', node.textContent);
 			}
 		});
 		return;
