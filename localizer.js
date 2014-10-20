@@ -94,7 +94,7 @@
 		var that = this;
 		window.localizer = this;
 		window.localize = function (key, data) {
-			that.localize(key, data);
+			return that.localize(key, data);
 		};
 	};
 
@@ -110,9 +110,6 @@
 
 		// Where the script is inserted in the page
 		scriptAnchor: 'i18n-src',
-
-		// Called on locale change
-		onLocaleChange: function (locale) {}
 	};
 
 	/**
@@ -120,7 +117,7 @@
 	 * and create and dispatch the event.
 	 * @public
 	 * @param {String} locale
-	 * @emits {Object} localeChanged - { locale: 'en_US' } for example
+	 * @emits {Object} localeChange - "en_US" for example
 	 * @return none
 	 */
 	Localizer.prototype.setLocale = function (locale) {
@@ -128,8 +125,9 @@
 		else if (locale === this.locale) return;
 		this.locale = locale;
 		
-		// Notify locale change
-		this.options.onLocaleChange(locale);
+		// Dispatch event on document for listeners
+		var evt = new CustomEvent('localeChange', { detail: locale });
+		document.dispatchEvent(evt);
 
 		var that = this;
 		var path = this.options.localePath.replace(/\{locale\}/, locale);
@@ -207,6 +205,28 @@
 		});
 		return;
 	};
+
+	/**
+	 * Add a listener on localeChange event.
+	 * We do use here the native *addEventListener*
+	 * mecanism to register listeners.
+	 * @param {String} eventName
+	 * @param {Function} listener
+	 * @return none
+	 */
+	Localizer.prototype.on = function(eventName, listener) {
+		listener = typeof eventName === 'function' ? eventName : listener;
+		if (!listener) throw new Error('listener cannot be null');
+		eventName = 'localeChange'; // only one for now
+		document.addEventListener(eventName, function (evt) {
+			return listener(evt.detail);
+		});
+	}
+	
+	/**
+	 * @alias Localizer.prototype.on
+	 */
+	Localizer.prototype.addEventListener = Localizer.prototype.on;
 
 	// Exports
 	window.Localizer = Localizer;

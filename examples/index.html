@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 	<head>
+		<meta charset="utf-8">
 		<title>Examples using localizer</title>
 		<script src="../localizer.js"></script>
 	</head>
@@ -23,6 +24,10 @@
 				} else {
 					localizer.setLocale('en_US');
 				}
+			});
+
+			l.on('localeChange', function (locale) {
+				console.log('localeChange listener says: locale changed to', locale);
 			});
 		</script>
 	</body>
