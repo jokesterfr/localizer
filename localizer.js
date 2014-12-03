@@ -117,9 +117,11 @@
 		 * @public
 		 * @param {String} locale
 		 * @emits {Object} localeChange - "en_US" for example
+		 * @param {Function} callback - gives ()
 		 * @return none
 		 */
-		setLocale: function (locale) {
+		setLocale: function (locale, callback) {
+			callback = callback || function () {};
 			if (!locale && this.locale) throw new Error('no locale given');
 			else if (locale === this.locale) return;
 			this.locale = locale;
@@ -133,6 +135,7 @@
 			insertScript(path, this.options.scriptAnchor, function () {
 				console.log('language changed to', this.locale);		
 				this.registeredElements.forEach(this.localize.bind(this));
+				return callback();
 			}.bind(this));
 			return;
 		},
