@@ -12,8 +12,13 @@
 		</ul>
 		<button data-localize>Switch to french</button>
 		<script>
-			// Instanciate singleton and localize body
+			// instanciate singleton and localize body
 			var l = new Localizer();
+
+			// init default locale
+			localizer.setLocale();
+
+			// register listeners on body
 			localize(document.body);
 
 			// Add a locale switcher

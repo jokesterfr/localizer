@@ -86,7 +86,6 @@
 		this.locale = null;
 		this.registeredElements = [];
 		extend(this.options, options);
-		this.setLocale(this.options.defaultLocale);
 
 		// Export can be defined once (singleton)
 		window.localizer = this;
@@ -119,7 +118,7 @@
 		 */
 		setLocale: function (locale, callback) {
 			callback = callback || function () {};
-			if (!locale && this.locale) return callback(new Error('no locale given'));
+			if (!locale) locale = this.options.defaultLocale;
 			else if (locale === this.locale) return callback();
 
 			// Get locale path
