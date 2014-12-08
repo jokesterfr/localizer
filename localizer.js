@@ -12,10 +12,9 @@
 	var singletonFlag;
 
 	/**
-	 * Extends a object with b properties
-	 * @param {Object} a
-	 * @param {Object} b
-	 * @return {Object} a
+	 * Extends object a with b options
+	 * @param  {Object} a first set of options (of this object)
+	 * @param  {Object} b set of options to merge
 	 */
 	function extend(a, b) {
 		for (var key in b) { 
@@ -23,7 +22,6 @@
 				a[key] = b[key];
 			}
 		}
-		return a;
 	}
 
 	/**
@@ -116,13 +114,13 @@
 		 * @public
 		 * @param {String} locale
 		 * @emits {Object} localeChange - "en_US" for example
-		 * @param {Function} callback - gives ()
+		 * @param {Function} callback - gives (Error err)
 		 * @return none
 		 */
 		setLocale: function (locale, callback) {
 			callback = callback || function () {};
-			if (!locale && this.locale) throw new Error('no locale given');
-			else if (locale === this.locale) return;
+			if (!locale && this.locale) return callback(new Error('no locale given'));
+			else if (locale === this.locale) return callback();
 
 			// Get locale path
 			var path = this.options.localePath.replace(/\{locale\}/, locale);
