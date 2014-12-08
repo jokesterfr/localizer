@@ -91,7 +91,6 @@
 		this.setLocale(this.options.defaultLocale);
 
 		// Export can be defined once (singleton)
-		var that = this;
 		window.localizer = this;
 		window.localize = this.localize.bind(this);
 	};
@@ -124,20 +123,22 @@
 			callback = callback || function () {};
 			if (!locale && this.locale) throw new Error('no locale given');
 			else if (locale === this.locale) return;
-			this.locale = locale;
-			
-			// Dispatch event on document for listeners
-			var evt = new CustomEvent('localeChange', { detail: locale });
-			document.dispatchEvent(evt);
+
+			// Get locale path
+			var path = this.options.localePath.replace(/\{locale\}/, locale);
 
 			// Insert language file and apply changes to all registered elements
-			var path = this.options.localePath.replace(/\{locale\}/, locale);
 			insertScript(path, this.options.scriptAnchor, function () {
-				console.log('language changed to', this.locale);		
+				this.locale = locale;
+				console.log('language changed to', this.locale);
+
+				// Dispatch event on document for listeners
+				var evt = new CustomEvent('localeChange', { detail: locale });
+				document.dispatchEvent(evt);
+
 				this.registeredElements.forEach(this.localize.bind(this));
 				return callback();
 			}.bind(this));
-			return;
 		},
 
 		/**
