@@ -47,10 +47,15 @@
 	 * @param {Function} callback - gives(Error err)
 	 */
 	function insertScript(url, id, callback) {
+		// Check if we need to update script
 		if (id) {
 			var old = document.getElementById(id);
-			if (old) old.parentNode.removeChild(old);
+			if (old) {
+				if (url === old.getAttribute('url')) return callback();
+				else old.parentNode.removeChild(old);
+			}
 		}
+		
 		// Reset previous i18n set (if any)
 		window.i18n = {};
 
