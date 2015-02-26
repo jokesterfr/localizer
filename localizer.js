@@ -199,7 +199,11 @@
 							data[key] = escapeHTML(dataset[key]);
 						}
 					}
-					node.innerHTML = func(data);
+					if (typeof func === 'function') {
+						node.innerHTML = func(data);
+					} else {
+						node.innerHTML = func;
+					}
 				} else if (attr) {
 					node.textContent = attr;
 				} else {
