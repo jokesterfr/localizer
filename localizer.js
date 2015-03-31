@@ -197,6 +197,9 @@
 						// Data is guessed on the fly with the dataset
 						if (dataset.hasOwnProperty(key) && key !== 'localize') {
 							data[key] = escapeHTML(dataset[key]);
+							if (data[key] && window.i18n && window.i18n[data[key]]) {
+								data[key] = window.i18n[data[key]]();
+							}
 						}
 					}
 					if (typeof func === 'function') {
