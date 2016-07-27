@@ -165,12 +165,12 @@
 			// -----------
 			if (!(key instanceof HTMLElement)) {
 				var func = window.i18n && window.i18n[key];
-				if (func) {
+				if (func && typeof func === 'function') {
 					return func(data);
 				}
 				return key;
 			}
-			
+
 			// HTMLElement case
 			// ----------------
 
