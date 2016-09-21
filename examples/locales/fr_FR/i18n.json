@@ -1,0 +1,27 @@
+{
+  "Hello {name}!": {
+    "value": "Salut {name} !",
+    "files": [
+      "examples/index.html"
+    ]
+  },
+  "I have {amount, plural, =0{no Alpaca :(} one{one Alpaca} other{# Alpacas :D} }": {
+    "value": "{amount, plural, =0{Je n'ai aucun alpaca :(} one{J'ai un alpaca!} other{J'ai # alpacas :D} }",
+    "files": [
+      "examples/index.html",
+      "examples/tpl/alpacas.html"
+    ]
+  },
+  "Switch to french": {
+    "value": "Passer en français",
+    "files": [
+      "examples/index.html"
+    ]
+  },
+  "Update a new Alpaca": {
+    "value": "Update a new Alpaca",
+    "files": [
+      "examples/index.html"
+    ]
+  }
+}

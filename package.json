@@ -1,0 +1,35 @@
+{
+  "name": "localizer",
+  "version": "1.0.0",
+  "description": "A client helper for grunt-locales client-side translations",
+  "main": "localizer.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "mocha ./test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jokesterfr/localizer.git"
+  },
+  "keywords": [
+    "locale",
+    "translate",
+    "grunt-locales",
+    "messageformat"
+  ],
+  "author": "Clément Désiles <main@jokester.fr>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jokesterfr/localizer/issues"
+  },
+  "homepage": "https://github.com/jokesterfr/localizer#readme",
+  "devDependencies": {
+    "bower": "1.7.9",
+    "grunt": "1.0.1",
+    "grunt-contrib-handlebars": "1.0.0",
+    "grunt-contrib-watch": "1.0.0",
+    "grunt-locales": "7.1.0"
+  }
+}

@@ -3,14 +3,45 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Examples using localizer</title>
+		<script src="../bower_components/handlebars/handlebars.runtime.min.js"></script>
 		<script src="../localizer.js"></script>
+		<!-- handlebars precompiled template generated with `grunt` -->
+		<script src="./build/templates.js"></script>
+		<style>
+			button {
+				cursor: pointer;
+			}
+			#alpaca-btn {
+				background-color: #333;
+				background-image: url('http://www.penncroftalpacas.com/images/516.jpg');
+				background-repeat: no-repeat;
+				background-size: 200px 100px;
+				color: green;
+				text-shadow: 0px 0px 4px white, 0px 0px 4px white, 0px 0px 4px white;
+				font-weight: bold;
+				font-size: 1.1em;
+				width: 200px;
+				height: 100px;
+				border: none;
+			}
+			#alpaca-btn:focus,
+			#alpaca-btn:hover {
+				border: none;
+			}
+		</style>
 	</head>
 	<body>
-		<ul>
-			<li data-localize>Mojo</li>
-			<li data-name="Princess Peach" data-localize>Hello {name}!</li>
-		</ul>
+		<!-- simple example -->
+		<h1 data-name="Princess Peach" data-foo="bar" data-localize>Hello {name}!</h1>
+
+		<!-- to be filled on alpaca btn click - in combination with handlebars pre-compiled template (see ./tpl) -->
+		<ul id="alpaca-info"></ul>
+
+		<!-- yummy controls ! -->
 		<button data-localize>Switch to french</button>
+		<button id="alpaca-btn" data-localize>Update a new Alpaca</button>
+
+		<!-- Yeaaah (I love comments) -->
 		<script>
 			// instanciate singleton and localize body
 			var l = new Localizer();
@@ -21,7 +52,7 @@
 			// register listeners on body
 			localize(document.body);
 
-			// Add a locale switcher
+			// add a locale switcher
 			var button = document.querySelector('button');
 			button.addEventListener('click', function () {
 				if (localizer.getLocale() === 'en_US') {
@@ -34,6 +65,27 @@
 			l.on('localeChange', function (locale) {
 				console.log('localeChange listener says: locale changed to', locale);
 			});
+
+			// register alpaca random number stuff
+			document.getElementById('alpaca-btn').addEventListener('click', function (evt) {
+
+				// fill a pre-compiled template
+				var xhr = new XMLHttpRequest();
+				xhr.addEventListener('load', function () {
+					var alpacaTemplate = templates['examples/tpl/alpacas.html'];
+					var content = alpacaTemplate({ amount: parseInt(this.responseText, 10) });
+					var ul = document.querySelector('ul#alpaca-info');
+					ul.innerHTML = content;
+
+					// translate the pre-compiled template result
+					localize(ul);
+				});
+
+				// get a random integer
+				xhr.open('GET', 'https://www.random.org/integers/?num=1&min=0&max=3&col=1&base=10&format=plain&rnd=new');
+				xhr.send();
+			}, false);
+
 		</script>
 	</body>
 </html>
