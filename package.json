@@ -7,7 +7,9 @@
     "example": "examples"
   },
   "scripts": {
-    "test": "mocha ./test"
+    "postinstall": "bower install && grunt",
+    "test": "open ./examples/index.html",
+    "check": "standard localizer.js"
   },
   "repository": {
     "type": "git",
@@ -30,6 +32,7 @@
     "grunt": "1.0.1",
     "grunt-contrib-handlebars": "1.0.0",
     "grunt-contrib-watch": "1.0.0",
-    "grunt-locales": "7.1.0"
+    "grunt-locales": "7.1.0",
+    "standard": "8.1.0"
   }
 }
