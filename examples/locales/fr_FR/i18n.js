@@ -15,6 +15,8 @@ i18n["Hello {name}!"] = function(d){return "Salut "+v(d,"name")+" !"};
 
 i18n["I have {amount, plural, =0{no Alpaca :(} one{one Alpaca} other{# Alpacas :D} }"] = function(d){return p(d,"amount",0,"fr",{"0":"Je n'ai aucun alpaca :(","one":"J'ai un alpaca!","other":"J'ai "+n(d,"amount")+" alpacas :D"})};
 
-i18n["Switch to french"] = "Passer en français";
+i18n["Switch english/french"] = "Changer anglais/français";
+
+i18n["Update Alpacas"] = "MaJ Alpacas";
 
 }());

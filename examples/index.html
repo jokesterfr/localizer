@@ -1,46 +1,47 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Examples using localizer</title>
-		<script src="../bower_components/handlebars/handlebars.runtime.min.js"></script>
-		<script src="../localizer.js"></script>
-		<!-- handlebars precompiled template generated with `grunt` -->
-		<script src="./build/templates.js"></script>
-		<style>
-			button {
-				cursor: pointer;
-			}
-			#alpaca-btn {
-				background-color: #333;
-				background-image: url('http://www.penncroftalpacas.com/images/516.jpg');
-				background-repeat: no-repeat;
-				background-size: 200px 100px;
-				color: green;
-				text-shadow: 0px 0px 4px white, 0px 0px 4px white, 0px 0px 4px white;
-				font-weight: bold;
-				font-size: 1.1em;
-				width: 200px;
-				height: 100px;
-				border: none;
-			}
-			#alpaca-btn:focus,
-			#alpaca-btn:hover {
-				border: none;
-			}
-		</style>
-	</head>
-	<body>
-		<!-- simple example -->
-		<h1 data-name="Princess Peach" data-foo="bar" data-localize>Hello {name}!</h1>
+  <head>
+    <meta charset="utf-8">
+    <title>Examples using localizer</title>
+    <script src="../bower_components/handlebars/handlebars.runtime.min.js"></script>
+    <script src="../localizer.js"></script>
+    <!-- handlebars precompiled template generated with `grunt` -->
+    <script src="./build/templates.js"></script>
+    <style>
+      button {
+        cursor: pointer;
+      }
+      #alpaca-btn {
+        background-color: #333;
+        background-image: url('http://www.penncroftalpacas.com/images/516.jpg');
+        background-repeat: no-repeat;
+        background-size: 200px 100px;
+        color: green;
+        text-shadow: 0px 0px 4px white, 0px 0px 4px white, 0px 0px 4px white;
+        font-weight: bold;
+        font-size: 1.1em;
+        width: 200px;
+        height: 100px;
+        border: none;
+      }
+      #alpaca-btn:focus,
+      #alpaca-btn:hover {
+        border: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- simple example -->
+    <h1 data-name="Princess Peach" data-localize>Hello {name}!</h1>
+    <p>
+      <!-- yummy controls ! -->
+      <button data-localize>Switch english/french</button><br />
 
-		<!-- to be filled on alpaca btn click - in combination with handlebars pre-compiled template (see ./tpl) -->
-		<ul id="alpaca-info"></ul>
+      <!-- to be filled on alpaca btn click - in combination with handlebars pre-compiled template (see ./tpl) -->
+      <ul id="alpaca-info"></ul>
+      <button id="alpaca-btn" data-localize>Update Alpacas</button>
+    </p>
 
-		<!-- yummy controls ! -->
-		<button data-localize>Switch to french</button>
-		<button id="alpaca-btn" data-localize>Update a new Alpaca</button>
-
-		<script src="./main.js" type="text/javascript"></script>
-	</body>
+    <script src="./main.js" type="text/javascript"></script>
+  </body>
 </html>

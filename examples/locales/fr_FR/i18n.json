@@ -12,14 +12,14 @@
       "examples/tpl/alpacas.html"
     ]
   },
-  "Switch to french": {
-    "value": "Passer en français",
+  "Switch english/french": {
+    "value": "Changer anglais/français",
     "files": [
       "examples/index.html"
     ]
   },
-  "Update a new Alpaca": {
-    "value": "Update a new Alpaca",
+  "Update Alpacas": {
+    "value": "MaJ Alpacas",
     "files": [
       "examples/index.html"
     ]

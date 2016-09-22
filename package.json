@@ -9,7 +9,8 @@
   "scripts": {
     "postinstall": "bower install && grunt",
     "test": "open ./examples/index.html",
-    "check": "standard localizer.js"
+    "check": "standard localizer.js",
+    "preversion": "npm run check"
   },
   "repository": {
     "type": "git",

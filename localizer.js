@@ -167,8 +167,14 @@
       // -----------
       if (!(key instanceof HTMLElement)) {
         var func = window.i18n && window.i18n[key]
-        if (func && typeof func === 'function') {
-          return func(data)
+        if (func) {
+          /*
+           * Now grunt-locales can map to String in its
+           * locale generated array, not only functions
+           * @see https://github.com/blueimp/grunt-locales#optionswrapstatictranslations
+           */
+          if (func === 'function') return func(data)
+          else return func
         }
         return key
       }
@@ -200,19 +206,19 @@
             // Data is guessed on the fly with the dataset
             if (dataset.hasOwnProperty(key) && key !== 'localize') {
               data[key] = escapeHTML(dataset[key])
+              // NOTE: this feature is disabled for now - we don't think it's useful
+              // to enable translation on data-stuff, this can be error prone!
+              // ----- DISABLED CODE -----
               // If a the key itself can be translated, do it
-              f = data[key] && window.i18n && window.i18n[data[key]]
-              console.warn(data[key], f)
-              if (f && typeof f === 'function') {
-                data[key] = f(dataset)
-              }
+              // f = data[key] && window.i18n && window.i18n[data[key]]
+              // if (f) {
+              //   if (typeof f === 'function') data[key] = f(dataset)
+              //   else data[key] = f
+              // }
             }
           }
-          if (typeof func === 'function') {
-            node.innerHTML = func(data)
-          } else {
-            node.innerHTML = func
-          }
+          if (typeof func === 'function') node.innerHTML = func(data)
+          else node.innerHTML = func
         } else if (attr) {
           node.textContent = attr
         } else {
