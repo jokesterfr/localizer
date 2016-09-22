@@ -197,7 +197,6 @@
         var attr = dataset && dataset.localize
         var func = window.i18n && window.i18n[attr || node.innerHTML]
         var key
-        var f
         if (func) {
           if (!attr) {
             node.setAttribute('data-localize', node.textContent)
@@ -210,7 +209,7 @@
               // to enable translation on data-stuff, this can be error prone!
               // ----- DISABLED CODE -----
               // If a the key itself can be translated, do it
-              // f = data[key] && window.i18n && window.i18n[data[key]]
+              // var f = data[key] && window.i18n && window.i18n[data[key]]
               // if (f) {
               //   if (typeof f === 'function') data[key] = f(dataset)
               //   else data[key] = f
