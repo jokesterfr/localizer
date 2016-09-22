@@ -7,6 +7,19 @@
  */
 module.exports = function(grunt) {
 
+  /*
+   * Disable warnings of this kind:
+   * >> Unable to parse locale string from examples/main.js:8:9.
+   * grunt-locale is using them abusively, in our case we need
+   * to translate dynamic content...
+   * @see https://github.com/blueimp/grunt-locales/commit/38fb0b56a39655f20ad0301cc65b48ec72ef3c06
+   */
+  var _warn = grunt.log.warn;
+  grunt.log.warn = function () {
+    if (/^Unable to parse locale/.test(arguments && arguments[0])) return;
+    _warn.apply(null, arguments);
+  };
+
   // Project configuration
   grunt.initConfig({
 
