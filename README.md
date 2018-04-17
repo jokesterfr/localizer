@@ -1,6 +1,10 @@
 Localizer
 =========
 
+[![branch develop](https://img.shields.io/badge/branch-develop-blue.svg)]()
+[![version](https://img.shields.io/badge/version-1.1.1-blue.svg)](./package.json)
+[![linting](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
 Localizer aims to simplify the usage of [grunt-locales](https://github.com/blueimp/grunt-locales) for translating purpose.
 Grunt-locale is a grunt plugin which helps building translation files out of your code base (*html* and *js* files), then when compiled, the javascript language file has to be included in your page.
 This is where *localizer* comes, it handles the import of language file for you, switching locale, and translating all nodes corresponding to your criterias.
