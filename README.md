@@ -12,17 +12,23 @@ This is where *localizer* comes, it handles the import of language file for you,
 Installation
 ------------
 
-... is simple as a bower package can be installed:
+```sh
+bower install localizer
+```
 
-	bower install localizer
+If you do not have bower installed:
 
-then add a script tag in your page:
+```sh
+npm install
+```
+
+Add a script tag in your page:
 
 ```html
 <script src="../../bower_components/localizer/localizer.js"></script>
 ```
 
-You're done!
+And you're done!
 
 API
 ---
@@ -35,7 +41,7 @@ Exposed objects are:
 
 ### Localizer
 
-*Localizer* prototype is 
+*Localizer* prototype is:
 
 ```
 <instance of Localizer> Localizer(<Object> options)
@@ -47,17 +53,17 @@ Default options are:
 
 ```javascript
 Localizer.prototype.options = {
-	// Where the pre-built javascript files will be retrieved from
-	localePath: 'locales/{locale}/i18n.js',
+  // Where the pre-built javascript files will be retrieved from
+  localePath: 'locales/{locale}/i18n.js',
 
-	// The default locale to be used
-	defaultLocale: 'en_US',
+  // The default locale to be used
+  defaultLocale: 'en_US',
 
-	// Where the script is inserted in the page
-	scriptAnchor: 'i18n-src',
+  // Where the script is inserted in the page
+  scriptAnchor: 'i18n-src',
 
-	// Called on locale change
-	onLocaleChange: function (locale) {}
+  // Called on locale change
+  onLocaleChange: function (locale) {}
 };
 ```
 
@@ -71,7 +77,9 @@ Alias to *localize* (see [localize](#localize)).
 // import the locales/fr_FR/i18n.js file
 // and update all the registered DOM
 // elements with the new translation.
-localizer.setLocale('fr_FR');
+localizer.setLocale('fr_FR', () => {
+  // French translations loaded
+})
 ```
 
 #### localizer.getLocale
@@ -94,9 +102,9 @@ console.log(localize('Hello')); // "Bonjour"
 ```html
 <h1 data-localize>Hello</h1>
 <script>
-	var title = document.querySelector('h1');
-	localize(title); 
-	console.log(title.textContent); // "Bonjour"
+  var title = document.querySelector('h1');
+  localize(title)
+  console.log(title.textContent); // "Bonjour"
 </script>
 ```
 
@@ -104,13 +112,13 @@ If you have many more dom content to translate, you can also call localize on a 
 
 ```html
 <body>
-	<h1 data-localize>Hello</h1>
-	<h1 data-localize>Hello again</h1>
-	<script>
-		localize(document.body); 
-		var title = document.querySelectorAll('h1').item(0);
-		console.log(title.textContent); // "Bonjour"
-	</script>
+  <h1 data-localize>Hello</h1>
+  <h1 data-localize>Hello again</h1>
+  <script>
+    localize(document.body)
+    var title = document.querySelectorAll('h1').item(0);
+    console.log(title.textContent); // "Bonjour"
+  </script>
 </body>
 ```
 
@@ -119,12 +127,12 @@ When you give a DOM element to the *localize* method, it registers the element t
 ```html
 <h1 data-localize>Hello</h1>
 <script>
-	localizer.setLocale('fr_FR');
-	var title = document.querySelector('h1');
-	localize(title); 
-	console.log(title.textContent); // "Bonjour"
-	localizer.setLocale('en_US');
-	console.log(title.textContent); // "Hello"
+  localizer.setLocale('fr_FR')
+  var title = document.querySelector('h1')
+  localize(title)
+  console.log(title.textContent) // "Bonjour"
+  localizer.setLocale('en_US')
+  console.log(title.textContent) // "Hello"
 </script>
 ```
 
@@ -138,6 +146,6 @@ Licence
 
 The MIT License (MIT)
 
-Copyright (c) 2014 Clément Désiles
+Copyright (c) 2018 Clément Désiles
 
 *For more details see the `LICENCE` file.*

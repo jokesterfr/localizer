@@ -1,10 +1,7 @@
 # Localizer
 
 ## Upcoming changes
-
-## Version 1.1.1 - 2018-04-17
-
-## Version 1.1.1 - 2018-04-17
+* [FIX] Update documentation
 
 ## Version 1.1.1 - 2018-04-17
 
