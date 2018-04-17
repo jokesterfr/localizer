@@ -41,3 +41,17 @@ document.getElementById('alpaca-btn').addEventListener('click', function (evt) {
   xhr.send()
 }, false)
 
+// Test localizing programatically with JS (no DOM)
+localizer.setLocale('fr_FR', () => {
+  let current = localize('Update Alpacas')
+  if (current !== 'MaJ Alpacas') {
+    console.debug('Current value:', current)
+    throw new Error('test: cannot do static translation')
+  }
+
+  current = localize('Hello {name}!', { name: 'Jean-Edouard' })
+  if (current !== 'Salut Jean-Edouard !') {
+    console.debug('Current value:', current)
+    throw new Error('test: cannot do dynamic translation')
+  }
+})

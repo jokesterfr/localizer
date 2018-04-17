@@ -1,16 +1,16 @@
 {
   "name": "localizer",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A client helper for grunt-locales client-side translations",
   "main": "localizer.js",
+  "author": "Clément Désiles <main@jokester.fr>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jokesterfr/localizer/issues"
+  },
+  "homepage": "https://github.com/jokesterfr/localizer#readme",
   "directories": {
     "example": "examples"
-  },
-  "scripts": {
-    "postinstall": "bower install && grunt",
-    "test": "open ./examples/index.html",
-    "check": "standard localizer.js",
-    "preversion": "npm run check"
   },
   "repository": {
     "type": "git",
@@ -22,18 +22,22 @@
     "grunt-locales",
     "messageformat"
   ],
-  "author": "Clément Désiles <main@jokester.fr>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/jokesterfr/localizer/issues"
+  "scripts": {
+    "postinstall": "bower install && grunt",
+    "clean": "git -c core.excludesfile=/dev/null clean -X -d -f",
+    "test": "xdg-open ./examples/index.html",
+    "check": "standard localizer.js",
+    "preversion": "npm run check",
+    "postversion": "npm run bump:readme && npm run bump:changelog",
+    "bump:readme": "sed -i \"s/version-.*-blue/version-${npm_package_version}-blue/\" README.md",
+    "bump:changelog": "title=\"## Upcoming changes\";date=`date +%Y-%m-%d`;sed -i \"s/${title}/${title}\\n\\n## Version ${npm_package_version} - ${date}/\" CHANGELOG.md"
   },
-  "homepage": "https://github.com/jokesterfr/localizer#readme",
   "devDependencies": {
-    "bower": "1.7.9",
-    "grunt": "1.0.1",
+    "bower": "1.8.4",
+    "grunt": "1.0.2",
     "grunt-contrib-handlebars": "1.0.0",
     "grunt-contrib-watch": "1.0.0",
     "grunt-locales": "7.1.0",
-    "standard": "8.1.0"
+    "standard": "11.0.1"
   }
 }

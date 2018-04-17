@@ -173,7 +173,7 @@
            * locale generated array, not only functions
            * @see https://github.com/blueimp/grunt-locales#optionswrapstatictranslations
            */
-          if (func === 'function') return func(data)
+          if (typeof func === 'function') return func(data)
           else return func
         }
         return key
