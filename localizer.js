@@ -1,5 +1,5 @@
 /**
- * @date 2014-09-11
+ * @date 2018-05-16
  * @author Clément Désiles <main@jokester.fr>
  * @description
  * Translate the data-localize DOM elements found to the desired language.
@@ -14,25 +14,11 @@
   var singletonFlag
 
   /**
-   * Extends object a with b options
-   * @param  {Object} a first set of options (of this object)
-   * @param  {Object} b set of options to merge
-   */
-  function extend (a, b) {
-    for (var key in b) {
-      if (b.hasOwnProperty(key)) {
-        a[key] = b[key]
-      }
-    }
-  }
-
-  /**
-   * Escape html chars from string to prevent
-   * Cross-site scripting attacks.
+   * Escape html chars from string to prevent cross-site scripting attacks.
    * @see https://github.com/blueimp/grunt-locales#dom-replacement
    */
   function escapeHTML (str) {
-    return str.replace(/[<>&"]/g, function (c) {
+    return str.replace(/[<>&"]/g, (c) => {
       return {
         '<': '&lt;',
         '>': '&gt;',
@@ -40,43 +26,6 @@
         '"': '&quot;'
       }[c]
     })
-  }
-
-  /**
-   * Load a javascript script dynamically into the dom <head>
-   * @param {String} url - path of the source script to load
-   * @param {String} id - identifier for switching purpose
-   * @param {Function} callback - gives(Error err)
-   */
-  function insertScript (url, id, callback) {
-    // Check if we need to update script
-    if (id) {
-      var old = document.getElementById(id)
-      if (old) {
-        if (url === old.getAttribute('url')) return callback()
-        else old.parentNode.removeChild(old)
-      }
-    }
-
-    // Reset previous i18n set (if any)
-    window.i18n = {}
-
-    // Adding the script tag to the head as suggested before
-    var script = document.createElement('script')
-    script.type = 'text/javascript'
-    script.src = url
-    script.id = id
-
-    // Then bind the event to the callback function.
-    // There are several events for cross browser compatibility.
-    script.onreadystatechange = callback
-    script.onload = callback
-    script.onerror = function () {
-      throw new Error('cannot import ' + url + ', no translation available')
-    }
-
-    // Fire the loading
-    document.head.appendChild(script)
   }
 
   /**
@@ -92,7 +41,7 @@
     singletonFlag = true
     this.locale = null
     this.registeredElements = []
-    extend(this.options, options)
+    Object.assign(this.options, options)
 
     // Export can be defined once (singleton)
     window.localizer = this
@@ -104,14 +53,8 @@
    */
   Localizer.prototype = {
     options: {
-      // Where the pre-built javascript files will be retrieved from
-      localePath: 'locales/{locale}/i18n.js',
-
       // The default locale to be used
-      defaultLocale: 'en_US',
-
-      // Where the script is inserted in the page
-      scriptAnchor: 'i18n-src'
+      defaultLocale: 'en-US',
     },
 
     /**
@@ -119,7 +62,7 @@
      * and create and dispatch the event.
      * @public
      * @param {String} locale
-     * @emits {Object} localeChange - "en_US" for example
+     * @emits {Object} localeChange - "en-US" for example
      * @param {Function} callback - gives (Error err)
      * @return none
      */
@@ -127,22 +70,15 @@
       callback = callback || function () {}
       if (!locale) locale = this.options.defaultLocale
       else if (locale === this.locale) return callback()
+      else if (!i18n.hasOwnProperty(locale)) throw new Error('locale not supported')
+      this.locale = locale
 
-      // Get locale path
-      var path = this.options.localePath.replace(/\{locale\}/, locale)
+      // Dispatch event on document for listeners
+      var evt = new CustomEvent('localeChange', { detail: locale })
+      document.dispatchEvent(evt)
 
-      // Insert language file and apply changes to all registered elements
-      insertScript(path, this.options.scriptAnchor, function () {
-        this.locale = locale
-        console.log('language changed to', this.locale)
-
-        // Dispatch event on document for listeners
-        var evt = new CustomEvent('localeChange', { detail: locale })
-        document.dispatchEvent(evt)
-
-        this.registeredElements.forEach(this.localize.bind(this))
-        return callback()
-      }.bind(this))
+      this.registeredElements.forEach(this.localize.bind(this))
+      return callback()
     },
 
     /**
@@ -166,7 +102,7 @@
       // String case
       // -----------
       if (!(key instanceof HTMLElement)) {
-        var func = window.i18n && window.i18n[key]
+        var func = window.i18n && window.i18n[this.locale][key]
         if (func) {
           /*
            * Now grunt-locales can map to String in its
@@ -191,11 +127,11 @@
       // Apply localize change
       if (elt.hasAttribute('data-localize')) elt = elt.parentNode
       var nodes = elt.querySelectorAll('[data-localize]')
-      Array.prototype.forEach.call(nodes, function (node) {
+      Array.prototype.forEach.call(nodes, (node) => {
         var dataset = node.dataset
         var data = {}
         var attr = dataset && dataset.localize
-        var func = window.i18n && window.i18n[attr || node.innerHTML]
+        var func = window.i18n && window.i18n[this.locale][attr || node.innerHTML]
         var key
         if (func) {
           if (!attr) {
@@ -205,15 +141,6 @@
             // Data is guessed on the fly with the dataset
             if (dataset.hasOwnProperty(key) && key !== 'localize') {
               data[key] = escapeHTML(dataset[key])
-              // NOTE: this feature is disabled for now - we don't think it's useful
-              // to enable translation on data-stuff, this can be error prone!
-              // ----- DISABLED CODE -----
-              // If a the key itself can be translated, do it
-              // var f = data[key] && window.i18n && window.i18n[data[key]]
-              // if (f) {
-              //   if (typeof f === 'function') data[key] = f(dataset)
-              //   else data[key] = f
-              // }
             }
           }
           if (typeof func === 'function') node.innerHTML = func(data)
@@ -239,7 +166,7 @@
       listener = typeof eventName === 'function' ? eventName : listener
       if (!listener) throw new Error('listener cannot be null')
       eventName = 'localeChange' // only one for now
-      document.addEventListener(eventName, function (evt) {
+      document.addEventListener(eventName, (evt) => {
         return listener(evt.detail)
       })
     }
@@ -252,7 +179,7 @@
 
   // Exports
   window.Localizer = Localizer
-  window.localize = function () {
+  window.localize = () => {
     throw new Error('instanciate Localizer once before usage')
   }
 })(window, document)
